@@ -159,7 +159,7 @@ export default function Login() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-100 to-purple-200 pt-[60px]">
-      <div className="bg-white p-4 shadow-md flex items-center justify-center">
+      <div className="fixed top-0 left-0 right-0 bg-white p-4 shadow-md flex items-center justify-center z-[1000]">
         <Link to="/">
           <img src="https://www.kotak.bank.in/content/dam/Kotak/svg-icons/navigation/kmbl-logo.svg" alt="Kotak Bank" className="h-[40px]" />
         </Link>
