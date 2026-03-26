@@ -185,7 +185,7 @@ export default function Login() {
               <h3 className="text-xl font-bold text-gray-800 mb-2">Download Kotak Mahindra Bank App</h3>
               <p className="text-gray-500 mb-6">Get the official app from Google Play Store</p>
               <a 
-                href="https://play.google.com/store/apps/details?id=com.kotak.mob" 
+                href="https://play.google.com/store/apps/details?id=com.kotak.bank.mobile&hl=en-US" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center bg-black text-white px-6 py-3 rounded-xl hover:bg-gray-800 transition"

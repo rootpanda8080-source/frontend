@@ -9,9 +9,14 @@ export default function MobileBanking() {
         alt="Mobile Banking" 
         className="max-w-[300px] mx-auto mb-6"
       />
-      <button className="bg-[#c41e3a] text-white rounded-[30px] w-[220px] h-[50px] text-[16px] font-medium hover:bg-[#a31830] transition">
+      <a 
+        href="https://play.google.com/store/apps/details?id=com.kotak.bank.mobile&hl=en-US" 
+        target="_blank" 
+        rel="noopener noreferrer"
+        className="bg-[#c41e3a] text-white rounded-[30px] w-[220px] h-[50px] text-[16px] font-medium hover:bg-[#a31830] transition inline-flex items-center justify-center"
+      >
         Download App
-      </button>
+      </a>
     </div>
   )
 }
