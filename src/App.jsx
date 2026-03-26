@@ -24,7 +24,7 @@ function App() {
         <Route path="/admin" element={<AdminLogin />} />
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
         <Route path="/" element={
-          <div className="min-h-screen bg-white">
+          <div className="min-h-screen bg-white pt-[60px]">
             <SplashScreen />
             <Header />
             <HeaderStrip />

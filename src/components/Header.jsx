@@ -20,7 +20,7 @@ export default function Header({ menuOpen, setMenuOpen }) {
           <div className="w-16 h-16 border-4 border-purple-600 border-t-transparent rounded-full animate-spin"></div>
         </div>
       )}
-      <header className="h-[60px] bg-white w-full relative flex items-center px-[10px] shadow-md sticky top-0 z-[1000]">
+      <header className="h-[60px] bg-white w-full fixed top-0 left-0 flex items-center px-[10px] shadow-md z-[1000]">
       <div 
         className="w-[40px] h-[40px] flex flex-col justify-center cursor-pointer z-50"
         onClick={() => setMenuOpen(!menuOpen)}
