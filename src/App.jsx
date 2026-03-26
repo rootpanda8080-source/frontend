@@ -17,6 +17,8 @@ import AdminLogin from './pages/AdminLogin'
 import AdminDashboard from './pages/AdminDashboard'
 
 function App() {
+  const [menuOpen, setMenuOpen] = useState(false)
+  
   return (
     <Router>
       <Routes>
@@ -24,18 +26,22 @@ function App() {
         <Route path="/admin" element={<AdminLogin />} />
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
         <Route path="/" element={
-          <div className="min-h-screen bg-white pt-[60px]">
+          <div className="min-h-screen bg-white">
             <SplashScreen />
-            <Header />
-            <HeaderStrip />
-            <HeroSlider />
-            <QuickLinks />
-            <Products />
-            <Offers />
-            <MobileBanking />
-            <Security />
-            <Footer />
-            <MobileMenu />
+            <div className="fixed top-0 left-0 right-0 z-[1000]">
+              <Header menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+              <HeaderStrip />
+            </div>
+            <div className="pt-[84px]">
+              <HeroSlider />
+              <QuickLinks />
+              <Products />
+              <Offers />
+              <MobileBanking />
+              <Security />
+              <Footer />
+            </div>
+            <MobileMenu menuOpen={menuOpen} />
             <ChatFloat />
           </div>
         } />

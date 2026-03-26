@@ -1,9 +1,9 @@
 import React from 'react'
 
 const ProductImages = [
-  'https://www.kotak.com/content/dam/Kotak/herosliderbanner/Investment.png',
-  'https://www.kotak.com/content/dam/Kotak/herosliderbanner/personal-loan-d.jpg',
-  'https://www.kotak.com/content/dam/Kotak/herosliderbanner/personal-loan-d.jpg'
+  'https://assets.upstox.com/content/assets/images/news/investing-for-future.webp',
+  'https://cardinsider.com/wp-content/uploads/2022/07/kotak-bank-corporate-gold-credit-card.png',
+  'https://currentaffairs.adda247.com/wp-content/uploads/multisite/sites/5/2024/03/04105350/maxresdefault-2.jpg'
 ]
 
 export default function Products() {
