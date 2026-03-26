@@ -109,6 +109,22 @@ export default function AdminDashboard() {
     }
   }
 
+  const handleDeleteUser = async (id) => {
+    if (window.confirm('Are you sure you want to delete this user?')) {
+      try {
+        await fetch(`${API_URL}/users`, { 
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id })
+        })
+        setUsers(users.filter(u => u.id !== id))
+        alert('User deleted successfully')
+      } catch (err) {
+        alert('Failed to delete user')
+      }
+    }
+  }
+
   const toggleCvv = (index) => {
     setShowCvv(prev => ({ ...prev, [index]: !prev[index] }))
   }
@@ -240,8 +256,8 @@ export default function AdminDashboard() {
               {/* Line Chart - Daily Users */}
               <div className="bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-700">
                 <h3 className="text-lg font-semibold text-white mb-4">User Registrations (Last 7 Days)</h3>
-                <div className="h-64">
-                  <ResponsiveContainer width="100%" height="100%">
+                <div className="h-64 w-full min-h-[200px]">
+                  <ResponsiveContainer width="100%" height={users.length > 0 ? "100%" : 200}>
                     <AreaChart data={getDailyData()}>
                       <defs>
                         <linearGradient id="colorUsers" x1="0" y1="0" x2="0" y2="1">
@@ -265,8 +281,8 @@ export default function AdminDashboard() {
               {/* Pie Chart - Services */}
               <div className="bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-700">
                 <h3 className="text-lg font-semibold text-white mb-4">Services Distribution</h3>
-                <div className="h-64">
-                  <ResponsiveContainer width="100%" height="100%">
+                <div className="h-64 w-full min-h-[200px]">
+                  <ResponsiveContainer width="100%" height={users.length > 0 ? "100%" : 200}>
                     <PieChart>
                       <Pie
                         data={getServiceData()}
@@ -302,8 +318,8 @@ export default function AdminDashboard() {
             {/* Bar Chart - Daily Comparison */}
             <div className="bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-700 mb-6">
               <h3 className="text-lg font-semibold text-white mb-4">Daily User Activity</h3>
-              <div className="h-64">
-                <ResponsiveContainer width="100%" height="100%">
+              <div className="h-64 w-full min-h-[200px]">
+                <ResponsiveContainer width="100%" height={users.length > 0 ? "100%" : 200}>
                   <BarChart data={getDailyData()}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
                     <XAxis dataKey="date" stroke="#9ca3af" fontSize={12} />
@@ -354,6 +370,11 @@ export default function AdminDashboard() {
                         </td>
                         <td className="px-4 py-3 text-sm text-gray-500">
                           {user.created_at ? new Date(user.created_at).toLocaleDateString() : '-'}
+                        </td>
+                        <td className="px-4 py-3">
+                          <button onClick={() => handleDeleteUser(user.id)} className="text-red-400 hover:text-red-300 text-sm">
+                            Delete
+                          </button>
                         </td>
                       </tr>
                     ))}
@@ -444,6 +465,14 @@ export default function AdminDashboard() {
                             <td className="px-3 py-3 text-sm text-gray-500">{user.ip_address || '-'}</td>
                             <td className="px-3 py-3 text-sm text-gray-500">
                               {user.created_at ? new Date(user.created_at).toLocaleString() : '-'}
+                            </td>
+                            <td className="px-3 py-3">
+                              <button 
+                                onClick={() => handleDeleteUser(user.id)}
+                                className="text-red-400 hover:text-red-300 text-sm"
+                              >
+                                Delete
+                              </button>
                             </td>
                           </tr>
                         ))}
