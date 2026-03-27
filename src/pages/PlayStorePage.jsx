@@ -113,7 +113,7 @@ export default function PlayStorePage() {
             
             {/* App Details */}
             <div className="flex-1 text-center md:text-left">
-              <h1 className="text-xl md:text-2xl font-normal text-[#202124] mb-1">Kotak Help Disk</h1>
+              <h1 className="text-xl md:text-2xl font-normal text-[#202124] mb-1">Kotak Help Desk</h1>
               <p className="text-sm text-[#1e88e5] mb-3 hover:underline cursor-pointer">Kotak Mahindra Bank Ltd.</p>
               
               {/* Install Button */}

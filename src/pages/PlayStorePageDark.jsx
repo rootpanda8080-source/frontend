@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { BiStar, BiChevronRight, BiCheck, BiArrowBack, BiDotsVertical, BiShield, BiDevices, BiInfoCircle, BiSearch, BiUser } from 'react-icons/bi'
+import { BiStar, BiChevronRight, BiCheck, BiArrowBack, BiDotsVertical, BiShield, BiDevices, BiInfoCircle, BiSearch, BiUser, BiDownload, BiUserCircle, BiBarChart } from 'react-icons/bi'
 
 export default function PlayStorePageDark() {
   const [searchQuery, setSearchQuery] = useState('')
@@ -96,7 +96,7 @@ export default function PlayStorePageDark() {
             
             {/* App Details */}
             <div className="flex-1">
-              <h1 className="text-lg font-medium text-white mb-1">Kotak Help Disk</h1>
+              <h1 className="text-lg font-medium text-white mb-1">Kotak Help Desk</h1>
               <p className="text-sm text-[#8ab4f8] mb-3">Kotak Mahindra Bank Ltd.</p>
               
               {/* Install Button */}
@@ -112,7 +112,7 @@ export default function PlayStorePageDark() {
           {/* Metadata Row */}
           <div className="flex flex-wrap items-center gap-2 text-xs mt-4 pt-4 border-t border-[#2d2d2d]">
             {/* Rating */}
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-0.5">
               <span className="text-white">4.5</span>
               <span className="flex">
                 <BiStar className="w-3 h-3 text-yellow-400" fill="#FBBC04" />
@@ -126,29 +126,34 @@ export default function PlayStorePageDark() {
             <span className="text-[#5f6368]">|</span>
             
             {/* Reviews */}
-            <div className="text-sm text-[#8ab4f8]">
-              52k reviews
+            <div className="flex items-center gap-1 text-sm text-[#8ab4f8] hover:underline cursor-pointer">
+              <BiUserCircle className="w-3.5 h-3.5" />
+              <span>52k reviews</span>
             </div>
             
             <span className="text-[#5f6368]">|</span>
             
             {/* Age Rating */}
-            <div className="bg-[#1f1f1f] border border-[#5f6368] px-2 py-0.5 rounded text-white text-xs">
-              3+
+            <div className="flex items-center gap-1">
+              <div className="bg-[#2d2d2d] border border-[#5f6368] px-1.5 py-0.5 rounded text-white text-xs">
+                3+
+              </div>
             </div>
             
             <span className="text-[#5f6368]">|</span>
             
             {/* Size */}
-            <div className="text-sm text-[#bdc1c6]">
-              68 MB
+            <div className="flex items-center gap-1 text-sm text-[#bdc1c6]">
+              <BiBarChart className="w-3.5 h-3.5" />
+              <span>68 MB</span>
             </div>
             
             <span className="text-[#5f6368]">|</span>
             
             {/* Downloads */}
-            <div className="text-sm text-[#bdc1c6]">
-              5M+
+            <div className="flex items-center gap-1 text-sm text-[#bdc1c6]">
+              <BiDownload className="w-3.5 h-3.5" />
+              <span>5M+</span>
             </div>
           </div>
         </div>
