@@ -200,7 +200,7 @@ export default function AdminDashboard() {
                     <p className="text-gray-400 text-sm">Total Users</p>
                     <p className="text-3xl font-bold mt-1 text-white">{users.length}</p>
                   </div>
-                  <div className="w-12 h-12 bg-purple-600/20 rounded-xl flex items-center justify-center">
+                  <div className="w-12 h-12 bg-red-600/20 rounded-xl flex items-center justify-center">
                     <BiUser className="text-2xl text-purple-500" />
                   </div>
                 </div>
@@ -416,7 +416,7 @@ export default function AdminDashboard() {
 
               {loading ? (
                 <div className="text-center py-12">
-                  <div className="w-12 h-12 border-4 border-purple-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
+                  <div className="w-12 h-12 border-4 border-red-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
                   <p className="text-gray-400 mt-4">Loading...</p>
                 </div>
               ) : filteredUsers.length === 0 ? (
@@ -582,7 +582,7 @@ export default function AdminDashboard() {
                 </div>
                 <button
                   onClick={handleChangePassword}
-                  className="w-full bg-purple-600 text-white py-2.5 rounded-lg font-medium hover:bg-purple-700 transition"
+                  className="w-full bg-red-600 text-white py-2.5 rounded-lg font-medium hover:bg-red-700 transition"
                 >
                   Update Password
                 </button>
@@ -651,7 +651,7 @@ export default function AdminDashboard() {
               onClick={() => setActiveMenu(item.id)}
               className={`flex items-center w-full px-4 py-3 mb-1 rounded-lg transition-all ${
                 activeMenu === item.id 
-                  ? 'bg-purple-600 text-white shadow-lg shadow-purple-600/30' 
+                  ? 'bg-red-600 text-white shadow-lg shadow-red-600/30' 
                   : 'text-gray-400 hover:bg-gray-800 hover:text-white'
               }`}
             >
@@ -685,7 +685,7 @@ export default function AdminDashboard() {
               </h1>
             </div>
             <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center">
+              <div className="w-8 h-8 bg-red-600 rounded-full flex items-center justify-center">
                 <BiUser className="text-white" />
               </div>
               <span className="hidden md:block text-sm font-medium text-gray-300">Admin</span>

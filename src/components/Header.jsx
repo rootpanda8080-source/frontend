@@ -17,7 +17,7 @@ export default function Header({ menuOpen, setMenuOpen }) {
     <>
       {loading && (
         <div className="fixed inset-0 bg-black bg-opacity-80 z-[9999] flex items-center justify-center">
-          <div className="w-16 h-16 border-4 border-purple-600 border-t-transparent rounded-full animate-spin"></div>
+          <div className="w-16 h-16 border-4 border-red-600 border-t-transparent rounded-full animate-spin"></div>
         </div>
       )}
       <header className="h-[60px] bg-white w-full fixed top-0 left-0 flex items-center px-[10px] shadow-md z-[1000]">

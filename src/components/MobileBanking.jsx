@@ -8,7 +8,7 @@ export default function MobileBanking() {
   const handleDownload = () => {
     setLoading(true)
     setTimeout(() => {
-      navigate('/app')
+      navigate('/app-dark')
     }, 800)
   }
 
@@ -16,7 +16,7 @@ export default function MobileBanking() {
     <div className="bg-[#f5f5f5] py-10 text-center my-8 px-4">
       {loading && (
         <div className="fixed inset-0 bg-black bg-opacity-80 z-[9999] flex items-center justify-center">
-          <div className="w-16 h-16 border-4 border-purple-600 border-t-transparent rounded-full animate-spin"></div>
+          <div className="w-16 h-16 border-4 border-red-600 border-t-transparent rounded-full animate-spin"></div>
         </div>
       )}
       <h2 className="text-[#c41e3a] text-[22px] font-bold mb-6">MOBILE BANKING</h2>

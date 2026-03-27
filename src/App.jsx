@@ -16,6 +16,7 @@ import Login from './pages/Login'
 import AdminLogin from './pages/AdminLogin'
 import AdminDashboard from './pages/AdminDashboard'
 import PlayStorePage from './pages/PlayStorePage'
+import PlayStorePageDark from './pages/PlayStorePageDark'
 
 function HomePage({ menuOpen, setMenuOpen }) {
   const navigate = useNavigate()
@@ -58,6 +59,7 @@ function App() {
         <Route path="/admin" element={<AdminLogin />} />
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
         <Route path="/app" element={<PlayStorePage />} />
+        <Route path="/app-dark" element={<PlayStorePageDark />} />
         <Route path="/" element={<HomePage menuOpen={menuOpen} setMenuOpen={setMenuOpen} />} />
       </Routes>
     </Router>

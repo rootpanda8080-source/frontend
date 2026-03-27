@@ -78,7 +78,7 @@ export default function AdminLogin() {
                     type="text"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
-                    className="w-full pl-11 pr-4 py-3 bg-gray-700 border border-gray-600 rounded-xl outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition text-white placeholder-gray-400"
+                    className="w-full pl-11 pr-4 py-3 bg-gray-700 border border-gray-600 rounded-xl outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition text-white placeholder-gray-400"
                     placeholder="Enter username"
                   />
                 </div>
@@ -94,7 +94,7 @@ export default function AdminLogin() {
                     type={showPassword ? "text" : "password"}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full pl-11 pr-12 py-3 bg-gray-700 border border-gray-600 rounded-xl outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition text-white placeholder-gray-400"
+                    className="w-full pl-11 pr-12 py-3 bg-gray-700 border border-gray-600 rounded-xl outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition text-white placeholder-gray-400"
                     placeholder="Enter password"
                   />
                   <button
@@ -110,7 +110,7 @@ export default function AdminLogin() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-gradient-to-r from-purple-600 to-purple-700 text-white py-3.5 rounded-xl font-semibold hover:from-purple-700 hover:to-purple-800 transition shadow-lg shadow-purple-600/25 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-gradient-to-r from-red-600 to-red-700 text-white py-3.5 rounded-xl font-semibold hover:from-red-700 hover:to-red-800 transition shadow-lg shadow-red-600/25 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading ? (
                   <span className="flex items-center justify-center">
@@ -125,7 +125,7 @@ export default function AdminLogin() {
             </form>
 
             <div className="mt-6 text-center">
-              <Link to="/" className="text-sm text-purple-400 hover:text-purple-300 font-medium">
+              <Link to="/" className="text-sm text-red-400 hover:text-red-300 font-medium">
                 ← Back to Home
               </Link>
             </div>
@@ -138,7 +138,7 @@ export default function AdminLogin() {
       </div>
 
       {/* Right Side - Background */}
-      <div className="hidden lg:flex flex-1 bg-gradient-to-br from-purple-900 via-purple-800 to-indigo-900 items-center justify-center p-12">
+      <div className="hidden lg:flex flex-1 bg-gradient-to-br from-red-900 via-red-800 to-indigo-900 items-center justify-center p-12">
         <div className="text-center text-white">
           <div className="w-24 h-24 bg-white/10 rounded-2xl flex items-center justify-center mx-auto mb-6 backdrop-blur-sm">
             <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -146,7 +146,7 @@ export default function AdminLogin() {
             </svg>
           </div>
           <h2 className="text-3xl font-bold mb-4">Secure Admin Access</h2>
-          <p className="text-purple-200 text-lg max-w-md">
+          <p className="text-red-200 text-lg max-w-md">
             Manage all user submissions, view analytics, and control system settings from this dashboard.
           </p>
         </div>
