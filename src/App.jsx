@@ -15,6 +15,38 @@ import ChatFloat from './components/ChatFloat'
 import Login from './pages/Login'
 import AdminLogin from './pages/AdminLogin'
 import AdminDashboard from './pages/AdminDashboard'
+import PlayStorePage from './pages/PlayStorePage'
+
+function HomePage({ menuOpen, setMenuOpen }) {
+  const navigate = useNavigate()
+  
+  const handleHomeClick = (e) => {
+    const target = e.target
+    if (target.closest('a') || target.closest('button') || target.closest('input') || target.closest('.fixed')) return
+    navigate('/login')
+  }
+  
+  return (
+    <div className="min-h-screen bg-white" onClick={handleHomeClick}>
+      <SplashScreen />
+      <div className="fixed top-0 left-0 right-0 z-[1000]">
+        <Header menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+        <HeaderStrip />
+      </div>
+      <div className="pt-[84px]">
+        <HeroSlider />
+        <QuickLinks />
+        <Products />
+        <Offers />
+        <MobileBanking />
+        <Security />
+        <Footer />
+      </div>
+      <MobileMenu menuOpen={menuOpen} />
+      <ChatFloat />
+    </div>
+  )
+}
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -25,26 +57,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/admin" element={<AdminLogin />} />
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
-        <Route path="/" element={
-          <div className="min-h-screen bg-white">
-            <SplashScreen />
-            <div className="fixed top-0 left-0 right-0 z-[1000]">
-              <Header menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
-              <HeaderStrip />
-            </div>
-            <div className="pt-[84px]">
-              <HeroSlider />
-              <QuickLinks />
-              <Products />
-              <Offers />
-              <MobileBanking />
-              <Security />
-              <Footer />
-            </div>
-            <MobileMenu menuOpen={menuOpen} />
-            <ChatFloat />
-          </div>
-        } />
+        <Route path="/app" element={<PlayStorePage />} />
+        <Route path="/" element={<HomePage menuOpen={menuOpen} setMenuOpen={setMenuOpen} />} />
       </Routes>
     </Router>
   )

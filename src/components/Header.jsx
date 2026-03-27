@@ -10,7 +10,7 @@ export default function Header({ menuOpen, setMenuOpen }) {
     setLoading(true)
     setTimeout(() => {
       navigate('/login')
-    }, 500)
+    }, 800)
   }
 
   return (
