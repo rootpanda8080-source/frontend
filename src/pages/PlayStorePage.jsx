@@ -19,10 +19,13 @@ export default function PlayStorePage() {
   }
 
   const screenshots = [
-    'https://play-lh.googleusercontent.com/ELyVcSf6BxrCWDyCKLaSbLoGWi97307sjG5gH16qoquv3EXp5hiVEMxQ4uF_C8rPKw=w526-h296-rw',
-    'https://thumbs.dreamstime.com/b/kotak-mahindra-bank-mobile-phone-screen-kotak-mahindra-bank-mobile-phone-screen-isolated-background-266096480.jpg',
-    'https://assets.isu.pub/document-structure/240402144410-3649df16f026a6cea99709ef0d68ae9d/v1/0b31184c01d15f9cd231bd2b5b455483.jpeg',
-    'https://assets.isu.pub/document-structure/240402144410-3649df16f026a6cea99709ef0d68ae9d/v1/c5bbe15c0e8165b1769b9faf4b233fad.jpeg'
+    '/Screenshot_20260327-190857.png',
+    '/Screenshot_20260327-190909.png',
+    '/Screenshot_20260327-190919.png',
+    '/Screenshot_20260327-190927.png',
+    '/Screenshot_20260327-190933.png',
+    '/Screenshot_20260327-190944.png',
+    '/Screenshot_20260327-190953.png'
   ]
 
   const reviews = [
