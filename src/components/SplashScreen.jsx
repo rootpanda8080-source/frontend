@@ -11,7 +11,7 @@ export default function SplashScreen() {
   if (!show) return null
 
   return (
-    <div className="fixed inset-0 bg-[#f69120] z-[99999999] flex items-center justify-center">
+    <div className="fixed inset-0 bg-red-600 z-[99999999] flex items-center justify-center">
       <img 
         src="https://www.kotak.bank.in/content/dam/Kotak/svg-icons/navigation/kmbl-logo.svg" 
         alt="Kotak Bank" 
